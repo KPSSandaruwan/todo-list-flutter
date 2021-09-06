@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/models/task_data.dart';
 
-class AddTask extends StatelessWidget {
+class AddTask extends StatefulWidget {
+
+  @override
+  _AddTaskState createState() => _AddTaskState();
+}
+
+class _AddTaskState extends State<AddTask> {
+
+  TextEditingController tasktext = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-
-    String? newTaskTitle;
-
 
     return Container(
       color: Color(0xFF757575),
@@ -32,13 +40,12 @@ class AddTask extends StatelessWidget {
             TextField(
               autofocus: true,
               textAlign: TextAlign.center,
-              onChanged:  (newText) {
-                newTaskTitle = newText;
-              },
+              controller: tasktext,
             ),
             TextButton(
               onPressed: () {
-                print(newTaskTitle);
+                Provider.of<TaskData>(context, listen: false).addTask(tasktext.text);
+                Navigator.pop(context);
               },
               child: Text(
                 'Add',
